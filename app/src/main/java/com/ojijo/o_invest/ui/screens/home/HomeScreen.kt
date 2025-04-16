@@ -85,7 +85,7 @@ fun HomeScreen(navController: NavController){
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = newOrange,
+                    containerColor = Color.Blue,
                     titleContentColor = Color.White,
                     navigationIconContentColor = Color.White
                 )
@@ -95,7 +95,7 @@ fun HomeScreen(navController: NavController){
         //BottomBar
         bottomBar = {
             NavigationBar(
-                containerColor = newOrange
+                containerColor = Color.Blue
             ){
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
@@ -350,76 +350,6 @@ fun HomeScreen(navController: NavController){
 
                 }
                 //End of Box
-
-
-
-                Column(modifier = Modifier.fillMaxSize()) {
-
-                    val mContext = LocalContext.current
-
-                    Text(
-                        text = "Personal Task",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black,
-                        fontFamily = FontFamily.Cursive
-
-                    )
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    Button(
-                        onClick = {
-                            navController.navigate(ROUT_START)
-                        },
-                        colors = ButtonDefaults.buttonColors(newOrange),
-                        shape = RoundedCornerShape(10.dp),
-                        modifier = Modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp),
-
-                        ) {
-                        Image(
-                            painter = painterResource(R.drawable.ic_launcher_background),
-                            contentDescription = "oji1",
-                            modifier = Modifier.size(30.dp)
-
-                        )
-
-                        Text(text = "NDA Review for  Project"
-                        )
-                        Text(text = " Today-10pm")
-
-                    }
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    Button(
-                        onClick = {
-                            navController.navigate(ROUT_START)
-                        },
-                        colors = ButtonDefaults.buttonColors(newOrange),
-                        shape = RoundedCornerShape(10.dp),
-                        modifier = Modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp)
-
-                    ) {
-                        Image(
-                            painter = painterResource(R.drawable.img_2),
-                            contentDescription = "oji1",
-                            modifier = Modifier.size(30.dp)
-
-                        )
-
-                        Text(text = "Email Reply for Green Project"
-                        )
-                        Text(text = " Today-10pm")
-
-
-                    }
-
-
-                }
-
-                Spacer(modifier = Modifier.height(20.dp))
-
 
 
             }

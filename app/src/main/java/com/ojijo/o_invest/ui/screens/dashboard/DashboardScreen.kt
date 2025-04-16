@@ -135,13 +135,13 @@ fun DashboardScreen(navController: NavController){
         //Row
 
         Row (
-            modifier = Modifier.padding(start = 20.dp)){
+            modifier = Modifier.padding(start = 50.dp, end = 50.dp)){
 
             //Card1
             Card (
                 modifier = Modifier
-                    .width(150.dp)
-                    .height(180.dp)
+                    .width(80.dp)
+                    .height(80.dp)
                     .clickable{navController.navigate(ROUT_HOME)}
             ){
                 Column (
@@ -168,8 +168,8 @@ fun DashboardScreen(navController: NavController){
             //Card2
             Card (
                 modifier = Modifier
-                    .width(150.dp)
-                    .height(180.dp)
+                    .width(80.dp)
+                    .height(80.dp)
                     .clickable{navController.navigate(ROUT_ABOUT)}
             ){
                 Column (
@@ -189,6 +189,35 @@ fun DashboardScreen(navController: NavController){
 
             //End of Card2
 
+            Spacer(modifier = Modifier.width(20.dp))
+
+
+
+            //Card2
+            Card (
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(80.dp)
+                    .clickable{navController.navigate(ROUT_ABOUT)}
+            ){
+                Column (
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ){
+                    Image(
+                        painter = painterResource(R.drawable.about),
+                        contentDescription = "About",
+                        modifier = Modifier.size(100.dp)
+
+                    )
+                    Text(text = "About", fontSize = 15.sp)
+                }
+            }
+
+            //End of Card2
+
+
         }
 
 
@@ -200,12 +229,14 @@ fun DashboardScreen(navController: NavController){
         //Row2
 
         Row (
-            modifier = Modifier.padding(start = 20.dp)){
+            modifier = Modifier.padding(start = 50.dp, end = 50.dp)){
 
 
             //Card1
             Card (
-                modifier = Modifier.width(150.dp).height(180.dp)
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(80.dp)
             ){
                 Column (
                     modifier = Modifier.fillMaxSize(),
@@ -226,13 +257,11 @@ fun DashboardScreen(navController: NavController){
 
             Spacer(modifier = Modifier.width(20.dp))
 
-
-
             //Card4
             Card (
                 modifier = Modifier
-                    .width(150.dp)
-                    .height(180.dp)
+                    .width(80.dp)
+                    .height(80.dp)
                     .clickable{navController.navigate(ROUT_ITEM)}
             ){
                 Column (
@@ -253,12 +282,126 @@ fun DashboardScreen(navController: NavController){
 
             //End of Card4
 
+            Spacer(modifier = Modifier.width(20.dp))
+
+            //Card2
+            Card (
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(80.dp)
+                    .clickable{navController.navigate(ROUT_ABOUT)}
+            ){
+                Column (
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ){
+                    Image(
+                        painter = painterResource(R.drawable.about),
+                        contentDescription = "About",
+                        modifier = Modifier.size(100.dp)
+
+                    )
+                    Text(text = "About", fontSize = 15.sp)
+                }
+            }
+
+            //End of Card2
+
+
 
         }
 
         //End of Row2
 
         Spacer(modifier = Modifier.height(30.dp))
+
+        //Row2
+
+        Row (
+            modifier = Modifier.padding(start = 50.dp, end = 50.dp)){
+
+
+            //Card1
+            Card (
+                modifier = Modifier.width(80.dp).height(80.dp)
+            ){
+                Column (
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ){
+                    Image(
+                        painter = painterResource(R.drawable.contact),
+                        contentDescription = "Contact",
+                        modifier = Modifier.size(100.dp)
+
+                    )
+                    Text(text = "Contact", fontSize = 15.sp)
+                }
+            }
+
+            //End of Card3
+
+            Spacer(modifier = Modifier.width(20.dp))
+
+            //Card4
+            Card (
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(80.dp)
+                    .clickable{navController.navigate(ROUT_ITEM)}
+            ){
+                Column (
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ){
+                    Image(
+                        painter = painterResource(R.drawable.img_2),
+                        contentDescription = "Products",
+                        modifier = Modifier.size(100.dp)
+
+                    )
+                    Text(text = "Products" +
+                            "", fontSize = 15.sp)
+                }
+            }
+
+            //End of Card4
+
+            Spacer(modifier = Modifier.width(20.dp))
+
+            //Card2
+            Card (
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(80.dp)
+                    .clickable{navController.navigate(ROUT_ABOUT)}
+            ){
+                Column (
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ){
+                    Image(
+                        painter = painterResource(R.drawable.about),
+                        contentDescription = "About",
+                        modifier = Modifier.size(100.dp)
+
+                    )
+                    Text(text = "About", fontSize = 15.sp)
+                }
+            }
+
+            //End of Card2
+
+
+
+        }
+
+        //End of Row2
+
 
     }
 

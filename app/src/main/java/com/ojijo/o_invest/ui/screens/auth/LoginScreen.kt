@@ -53,7 +53,7 @@ fun LoginScreen(
                 Toast.makeText(context, "Invalid Credentials", Toast.LENGTH_SHORT).show()
             } else {
                 if (user.role == "admin") {
-                    navController.navigate(ROUT_ITEM) {
+                    navController.navigate(ROUT_DASHBOARD) {
                     }
                 } else {
                     navController.navigate(ROUT_DASHBOARD) {

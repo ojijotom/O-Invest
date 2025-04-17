@@ -12,19 +12,25 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.handwriting.handwritingHandler
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -59,7 +65,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ojijo.o_invest.R
+import com.ojijo.o_invest.navigation.ROUT_ABOUT
 import com.ojijo.o_invest.navigation.ROUT_HOME
+import com.ojijo.o_invest.navigation.ROUT_INTENT
 import com.ojijo.o_invest.navigation.ROUT_ITEM
 import com.ojijo.o_invest.navigation.ROUT_LOGIN
 import com.ojijo.o_invest.navigation.ROUT_START
@@ -68,304 +76,205 @@ import com.ojijo.o_invest.ui.theme.newWhite
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavController){
-
-    //Scaffold
+fun HomeScreen(navController: NavController) {
 
     var selectedIndex by remember { mutableStateOf(0) }
 
     Scaffold(
-        //TopBar
         topBar = {
             TopAppBar(
-                title = { Text("PROJECT") },
+                title = { Text("Quick Action") },
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigate(ROUT_LOGIN) }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    IconButton(onClick = {}) {
+                        Icon(Icons.Default.Menu, contentDescription = "Menu")
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Blue,
-                    titleContentColor = Color.White,
-                    navigationIconContentColor = Color.White
-                )
+                actions = {
+                    IconButton(onClick = {}) {
+                        Icon(Icons.Default.Person, contentDescription = "Profile")
+                    }
+                    IconButton(onClick = {}) {
+                        Icon(Icons.Default.Notifications, contentDescription = "Notifications")
+                    }
+                }
             )
         },
 
-        //BottomBar
         bottomBar = {
-            NavigationBar(
-                containerColor = Color.Blue
-            ){
-                NavigationBarItem(
-                    icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-                    label = { Text("Home") },
-                    selected = selectedIndex == 0,
-                    onClick = { selectedIndex = 0
-                        navController.navigate(ROUT_HOME)
-                    }
-                )
-                NavigationBarItem(
-                    icon = { Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
-                    label = { Text("Favorites") },
-                    selected = selectedIndex == 1,
-                    onClick = { selectedIndex = 1
-                        navController.navigate(ROUT_ITEM)
-                    }
-                )
-                NavigationBarItem(
-                    icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    label = { Text("Profile") },
-                    selected = selectedIndex == 2,
-                    onClick = { selectedIndex = 2
-                        navController.navigate(ROUT_HOME)
-                    }
-                )
-                NavigationBarItem(
-                    icon = { Icon(Icons.Default.Info, contentDescription = "Favorites") },
-                    label = { Text("Info") },
-                    selected = selectedIndex == 1,
-                    onClick = { selectedIndex = 1
-                        navController.navigate(ROUT_HOME)
-                    }
-                )
-
+            NavigationBar(containerColor = Color(0xFFE0E0E0)) {
+                listOf("Home", "Favorites", "Profile").forEachIndexed { index, label ->
+                    NavigationBarItem(
+                        icon = {
+                            Icon(
+                                imageVector = when (index) {
+                                    0 -> Icons.Default.Home
+                                    1 -> Icons.Default.Favorite
+                                    else -> Icons.Default.Person
+                                },
+                                contentDescription = label
+                            )
+                        },
+                        label = { Text(label) },
+                        selected = selectedIndex == index,
+                        onClick = { selectedIndex = index }
+                    )
+                }
             }
         },
 
-        //Contents
         content = { paddingValues ->
             Column(
                 modifier = Modifier
                     .padding(paddingValues)
                     .fillMaxSize()
+                    .background(Color(0xFFF5F5F5))
                     .verticalScroll(rememberScrollState())
             ) {
 
-                val mContext = LocalContext.current
-
-
-
-                //Main Contents of the page
-                Spacer(modifier = Modifier.height(20.dp))
-
-
-                //SearchBar
-                var search by remember { mutableStateOf("") }
-                OutlinedTextField(
-                    value = search,
-                    onValueChange = {search = it },
-                    modifier = Modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp),
-                    leadingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = "") },
-                    placeholder = { Text(text = "Search...") }
-                )
-
-                //End of SearchBar
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-
-            }
-            Column (
-                modifier = Modifier.fillMaxSize()
-            ){
-
-                Box (modifier = Modifier.verticalScroll(rememberScrollState())){
-                    //Card
-                    Card (
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color(0xFF2196F3))
+                ) {
+                    // Top header card
+                    Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(450.dp)
-                        ,
-                        colors = CardDefaults.cardColors(newWhite)
-                    ){
+                            .height(150.dp),
+                        shape = RoundedCornerShape(bottomStart = 30.dp, bottomEnd = 30.dp),
+                        colors = CardDefaults.cardColors(Color.White),
+                        elevation = CardDefaults.cardElevation(6.dp)
+                    ) {}
 
-                        Spacer(modifier = Modifier.height(100.dp))
-
-
-                        Column (modifier = Modifier.fillMaxSize().padding(20.dp)){
-
-                            val mContext = LocalContext.current
-
-
+                    // Overlapping content card
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 24.dp)
+                            .offset(y = 90.dp),
+                        shape = RoundedCornerShape(20.dp),
+                        elevation = CardDefaults.cardElevation(8.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(20.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
                             Text(
-                                text = "Hi Ojijo !",
-                                fontSize = 30.sp,
+                                text = "Welcome to O-Invest",
+                                fontFamily = FontFamily.Cursive,
+                                fontSize = 28.sp,
                                 fontWeight = FontWeight.Bold,
-                                textAlign = TextAlign.Center,
-                                fontStyle = FontStyle.Italic,
-                                color = Color.Black,
-                                fontFamily = FontFamily.Cursive
+                                color = Color.Black
                             )
-
-                            Text(text = "Here are your projects")
-
-                            Spacer(modifier = Modifier.height(30.dp))
-
-
-
-                            //Row1
-                            Row (modifier = Modifier
-                                .padding(start = 10.dp)
-                                .horizontalScroll(rememberScrollState())
-                            ){
-
-                                //Card1
-                                Card (
-                                    modifier = Modifier
-                                        .width(110.dp)
-                                        .height(200.dp)
-                                        .clickable{navController.navigate(ROUT_HOME)}
-                                ){
-                                    Column (
-                                        modifier = Modifier.fillMaxSize().background(color = Color.Blue),
-                                        horizontalAlignment = Alignment.CenterHorizontally,
-                                        verticalArrangement = Arrangement.Center
-                                    ){
-                                        Image(
-                                            painter = painterResource(R.drawable.background),
-                                            contentDescription = "Home",
-                                            modifier = Modifier.size(500.dp)
-
-                                        )
-                                    }
-                                }
-
-                                //End of Card1
-                                Spacer(modifier = Modifier.width(20.dp))
-
-
-
-                                //Card2
-                                Card (
-                                    modifier = Modifier
-                                        .width(110.dp)
-                                        .height(200.dp)
-                                        .clickable{navController.navigate(ROUT_HOME)}
-                                ){
-                                    Column (
-                                        modifier = Modifier.fillMaxSize().background(newOrange),
-                                        horizontalAlignment = Alignment.CenterHorizontally,
-                                        verticalArrangement = Arrangement.Center
-                                    ){
-                                        Image(
-                                            painter = painterResource(R.drawable.home),
-                                            contentDescription = "Home",
-                                            modifier = Modifier.size(100.dp)
-
-                                        )
-                                    }
-                                }
-
-                                //End of Card2
-
-                                Spacer(modifier = Modifier.width(20.dp))
-
-                                //Card3
-                                Card (
-                                    modifier = Modifier
-                                        .width(110.dp)
-                                        .height(200.dp)
-                                        .clickable{navController.navigate(ROUT_HOME)}
-                                ){
-                                    Column (
-                                        modifier = Modifier.fillMaxSize().background(color = Color.Magenta),
-                                        horizontalAlignment = Alignment.CenterHorizontally,
-                                        verticalArrangement = Arrangement.Center
-                                    ){
-                                        Image(
-                                            painter = painterResource(R.drawable.img_2),
-                                            contentDescription = "Home",
-                                            modifier = Modifier.size(100.dp)
-
-                                        )
-                                    }
-                                }
-
-                                //End of Card3
-
-                                Spacer(modifier = Modifier.width(20.dp))
-
-                                //Card4
-                                Card (
-                                    modifier = Modifier
-                                        .width(110.dp)
-                                        .height(200.dp)
-                                        .clickable{navController.navigate(ROUT_HOME)}
-                                ){
-                                    Column (
-                                        modifier = Modifier.fillMaxSize().background(color = Color.Blue),
-                                        horizontalAlignment = Alignment.CenterHorizontally,
-                                        verticalArrangement = Arrangement.Center
-                                    ){
-                                        Image(
-                                            painter = painterResource(R.drawable.background),
-                                            contentDescription = "Home",
-                                            modifier = Modifier.size(500.dp)
-
-                                        )
-                                    }
-                                }
-
-                                //End of Card4
-
-                                Spacer(modifier = Modifier.width(20.dp))
-
-                                //Card5
-                                Card (
-                                    modifier = Modifier
-                                        .width(110.dp)
-                                        .height(200.dp)
-                                        .clickable{navController.navigate(ROUT_HOME)}
-                                ){
-                                    Column (
-                                        modifier = Modifier.fillMaxSize().background(Color.Blue),
-                                        horizontalAlignment = Alignment.CenterHorizontally,
-                                        verticalArrangement = Arrangement.Center
-                                    ){
-                                        Image(
-                                            painter = painterResource(R.drawable.img_5),
-                                            contentDescription = "Home",
-                                            modifier = Modifier.size(500.dp)
-
-                                        )
-                                    }
-                                }
-
-                                //End of Card5
-
-                            }
-                            //End of Row1
-
-
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = "Let your money work for you!",
+                                fontSize = 16.sp,
+                                color = Color.DarkGray
+                            )
+                            Spacer(modifier = Modifier.height(12.dp))
+                            Image(
+                                painter = painterResource(R.drawable.img_15),
+                                contentDescription = "App Banner",
+                                modifier = Modifier.size(100.dp)
+                            )
                         }
-
-                        Spacer(modifier = Modifier.height(20.dp))
-
                     }
-                    //End of Card
-
-                    Spacer(modifier = Modifier.height(30.dp))
-
-
                 }
-                //End of Box
 
+                Spacer(modifier = Modifier.height(130.dp))
 
+                // Action Grid (with two cards per row)
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = 24.dp)
+                ) {
+                    ActionRow(
+                        navController,
+                        listOf(
+                            Pair("Send Money" to R.drawable.img_27) to ROUT_HOME,
+                            Pair("Mpesa Paybill" to R.drawable.img_28) to ROUT_ABOUT
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    ActionRow(
+                        navController,
+                        listOf(
+                            Pair("Reversal" to R.drawable.img_29) to "",
+                            Pair("Bills & Airtime" to R.drawable.img_44) to ROUT_ITEM
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    ActionRow(
+                        navController,
+                        listOf(
+                            Pair("Top Up" to R.drawable.img_43) to "",
+                            Pair("Withdraw" to R.drawable.img_35) to ROUT_ITEM
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(40.dp))
+                }
             }
-
         }
     )
-
-    //End of scaffold
-
-
-
 }
-@Preview(showBackground = true)
+
+// Reusable composable for row of 2 cards
 @Composable
-fun HomeScreenPreview(){
+fun ActionRow(
+    navController: NavController,
+    items: List<Pair<Pair<String, Int>, String>>
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        items.forEach { (item, route) ->
+            ActionCard(
+                title = item.first,
+                iconRes = item.second,
+                onClick = {
+                    if (route.isNotEmpty()) {
+                        navController.navigate(route)
+                    }
+                }
+            )
+        }
+    }
+}
 
-    HomeScreen(rememberNavController())
-
+@Composable
+fun ActionCard(
+    title: String,
+    iconRes: Int,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .width(140.dp)
+            .height(160.dp)
+            .clickable { onClick() },
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(6.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Image(
+                painter = painterResource(id = iconRes),
+                contentDescription = title,
+                modifier = Modifier.size(80.dp)
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = title,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Medium
+            )
+        }
+    }
 }

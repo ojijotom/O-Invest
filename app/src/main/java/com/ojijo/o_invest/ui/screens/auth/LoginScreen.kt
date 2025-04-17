@@ -30,6 +30,7 @@ import com.ojijo.o_invest.navigation.ROUT_ITEM
 import com.ojijo.o_invest.navigation.ROUT_REGISTER
 import com.ojijo.o_invest.R
 import com.ojijo.o_invest.navigation.ROUT_DASHBOARD
+import com.ojijo.o_invest.navigation.ROUT_HOME
 import com.ojijo.o_invest.navigation.ROUT_ITEM
 import com.ojijo.o_invest.navigation.ROUT_REGISTER
 import com.ojijo.o_invest.viewmodel.AuthViewModel
@@ -53,7 +54,7 @@ fun LoginScreen(
                 Toast.makeText(context, "Invalid Credentials", Toast.LENGTH_SHORT).show()
             } else {
                 if (user.role == "admin") {
-                    navController.navigate(ROUT_DASHBOARD) {
+                    navController.navigate(ROUT_HOME) {
                     }
                 } else {
                     navController.navigate(ROUT_DASHBOARD) {

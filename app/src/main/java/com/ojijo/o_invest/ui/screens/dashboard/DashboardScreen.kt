@@ -45,9 +45,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ojijo.o_invest.R
 import com.ojijo.o_invest.navigation.ROUT_ABOUT
+import com.ojijo.o_invest.navigation.ROUT_DASHBOARD
 import com.ojijo.o_invest.navigation.ROUT_HOME
-import com.ojijo.o_invest.navigation.ROUT_ITEM
-import com.ojijo.o_invest.ui.theme.newWhite
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -57,7 +56,7 @@ fun DashboardScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFEAF0F5)) // light clean background
+            .background(Color(0xFFF7F9FB)) // Softer light background
             .verticalScroll(scrollState)
     ) {
         // Top Section
@@ -65,15 +64,15 @@ fun DashboardScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(250.dp),
-            shape = RoundedCornerShape(bottomStart = 50.dp, bottomEnd = 50.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            shape = RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp),
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF0D47A1)),
+            elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
         ) {
             TopAppBar(
                 title = {
                     Text(
-                        text = "Dashboard",
-                        color = Color.Black,
+                        text = "O-Invest Dashboard",
+                        color = Color.White,
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -82,11 +81,12 @@ fun DashboardScreen(navController: NavController) {
                     IconButton(onClick = {}) {
                         Icon(
                             imageVector = Icons.Default.Menu,
-                            contentDescription = "Menu Icon"
+                            contentDescription = "Menu Icon",
+                            tint = Color.White
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent)
             )
         }
 
@@ -96,127 +96,125 @@ fun DashboardScreen(navController: NavController) {
                 .padding(horizontal = 24.dp)
                 .offset(y = (-40).dp)
                 .fillMaxWidth()
-                .height(200.dp),
+                .height(210.dp),
             shape = RoundedCornerShape(20.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White),
-            elevation = CardDefaults.cardElevation(6.dp)
+            elevation = CardDefaults.cardElevation(8.dp)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp),
+                    .padding(20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceEvenly
+                verticalArrangement = Arrangement.Center
             ) {
                 Text(
                     text = "Welcome to O-Invest",
                     fontFamily = FontFamily.Cursive,
-                    fontSize = 32.sp,
+                    fontSize = 30.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFF0A0A0A)
                 )
+                Spacer(modifier = Modifier.height(6.dp))
                 Text(
                     text = "Let your money work for you!",
                     fontSize = 16.sp,
-                    color = Color.Gray
+                    color = Color(0xFF757575)
                 )
+                Spacer(modifier = Modifier.height(10.dp))
                 Image(
                     painter = painterResource(R.drawable.img_15),
                     contentDescription = null,
-                    modifier = Modifier.size(80.dp)
+                    modifier = Modifier.size(70.dp)
                 )
             }
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
         // Features Grid
         Column(
-            modifier = Modifier
-                .padding(horizontal = 24.dp)
+            modifier = Modifier.padding(horizontal = 20.dp)
         ) {
             val cardModifier = Modifier
-                .size(120.dp)
-                .clip(RoundedCornerShape(16.dp))
+                .size(130.dp)
+                .clip(RoundedCornerShape(18.dp))
                 .background(Color.White)
                 .padding(8.dp)
 
-            val imageModifier = Modifier.size(70.dp)
+            val imageModifier = Modifier.size(60.dp)
 
-            val textStyle = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
+            val textStyle = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = Color(0xFF212121))
 
             // First Row
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                DashboardOptionCard(
-                    icon = R.drawable.img_27,
-                    label = "Send Money",
-                    modifier = cardModifier.clickable { navController.navigate(ROUT_HOME) },
-                    imageModifier = imageModifier,
-                    textStyle = textStyle
-                )
-                DashboardOptionCard(
-                    icon = R.drawable.img_28,
-                    label = "Mpesa Paybill",
-                    modifier = cardModifier.clickable { navController.navigate(ROUT_ABOUT) },
-                    imageModifier = imageModifier,
-                    textStyle = textStyle
-                )
-            }
+            DashboardOptionsRow(
+                navController,
+                listOf(
+                    DashboardOptionData("Send Money", R.drawable.img_27, ROUT_HOME),
+                    DashboardOptionData("Mpesa Paybill", R.drawable.img_28, ROUT_ABOUT)
+                ),
+                cardModifier, imageModifier, textStyle
+            )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             // Second Row
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                DashboardOptionCard(
-                    icon = R.drawable.img_29,
-                    label = "Reversal",
-                    modifier = cardModifier,
-                    imageModifier = imageModifier,
-                    textStyle = textStyle
-                )
-                DashboardOptionCard(
-                    icon = R.drawable.img_44,
-                    label = "Bills & Airtime",
-                    modifier = cardModifier.clickable { navController.navigate(ROUT_ITEM) },
-                    imageModifier = imageModifier,
-                    textStyle = textStyle
-                )
-            }
+            DashboardOptionsRow(
+                navController,
+                listOf(
+                    DashboardOptionData("Reversal", R.drawable.img_29, null),
+                    DashboardOptionData("Bills & Airtime", R.drawable.img_44, ROUT_DASHBOARD)
+                ),
+                cardModifier, imageModifier, textStyle
+            )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             // Third Row
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                DashboardOptionCard(
-                    icon = R.drawable.img_43,
-                    label = "Top Up",
-                    modifier = cardModifier,
-                    imageModifier = imageModifier,
-                    textStyle = textStyle
-                )
-                DashboardOptionCard(
-                    icon = R.drawable.img_35,
-                    label = "Withdraw",
-                    modifier = cardModifier.clickable { navController.navigate(ROUT_ITEM) },
-                    imageModifier = imageModifier,
-                    textStyle = textStyle
-                )
-            }
+            DashboardOptionsRow(
+                navController,
+                listOf(
+                    DashboardOptionData("Top Up", R.drawable.img_43, null),
+                    DashboardOptionData("Withdraw", R.drawable.img_35, ROUT_DASHBOARD)
+                ),
+                cardModifier, imageModifier, textStyle
+            )
         }
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(50.dp))
     }
 }
 
+// Helper Row
+data class DashboardOptionData(val label: String, val icon: Int, val route: String?)
+
+@Composable
+fun DashboardOptionsRow(
+    navController: NavController,
+    options: List<DashboardOptionData>,
+    cardModifier: Modifier,
+    imageModifier: Modifier,
+    textStyle: TextStyle
+) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        options.forEach { option ->
+            DashboardOptionCard(
+                icon = option.icon,
+                label = option.label,
+                modifier = cardModifier.clickable {
+                    option.route?.let { navController.navigate(it) }
+                },
+                imageModifier = imageModifier,
+                textStyle = textStyle
+            )
+        }
+    }
+}
+
+// Option Card
 @Composable
 fun DashboardOptionCard(
     icon: Int,
@@ -228,7 +226,7 @@ fun DashboardOptionCard(
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(4.dp)
+        elevation = CardDefaults.cardElevation(5.dp)
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -240,7 +238,7 @@ fun DashboardOptionCard(
                 contentDescription = label,
                 modifier = imageModifier
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             Text(text = label, style = textStyle)
         }
     }

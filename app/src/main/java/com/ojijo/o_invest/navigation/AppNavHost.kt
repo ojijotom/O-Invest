@@ -1,7 +1,7 @@
 package com.ojijo.o_invest.navigation
 
+import RegisterScreen
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
@@ -19,8 +19,11 @@ import com.ojijo.o_invest.ui.screens.splash.SplashScreen
 import com.ojijo.o_invest.ui.screens.start.StartScreen
 import com.ojijo.o_invest.viewmodel.AuthViewModel
 import com.ojijo.o_invest.ui.screens.auth.LoginScreen
-import com.ojijo.o_invest.ui.screens.auth.RegisterScreen
+import com.ojijo.o_invest.ui.screens.contact.ContactScreen
+import com.ojijo.o_invest.ui.screens.invest.InvestScreen
 import com.ojijo.o_invest.ui.screens.service.ServiceScreen
+import com.ojijo.o_invest.ui.screens.auth.RegisterScreen
+
 
 
 @Composable
@@ -63,6 +66,15 @@ fun AppNavHost(
             composable(ROUT_SERVICE) {
                 ServiceScreen(navController)
             }
+            composable(ROUT_INVEST) {
+                InvestScreen(navController)
+            }
+            composable(ROUT_CONTACT) {
+                ContactScreen(navController)
+            }
+
+
+
 
 
 

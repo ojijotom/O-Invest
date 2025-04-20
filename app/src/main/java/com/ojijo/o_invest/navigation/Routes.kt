@@ -8,6 +8,8 @@ const val ROUT_DASHBOARD = "dashboard"
 const val ROUT_SERVICE = "service"
 const val ROUT_SPLASH = "splash"
 const val ROUT_FORM = "form"
+const val ROUT_INVEST = "invest"
+const val ROUT_CONTACT = "contact"
 
 const val ROUT_REGISTER = "Register"
 const val ROUT_LOGIN = "Login"

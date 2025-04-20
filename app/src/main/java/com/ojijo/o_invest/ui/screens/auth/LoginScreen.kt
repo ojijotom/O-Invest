@@ -31,7 +31,9 @@ import androidx.navigation.NavController
 import com.ojijo.o_invest.navigation.ROUT_DASHBOARD
 import com.ojijo.o_invest.navigation.ROUT_REGISTER
 import com.ojijo.o_invest.R
+import com.ojijo.o_invest.navigation.ROUT_CONTACT
 import com.ojijo.o_invest.navigation.ROUT_HOME
+import com.ojijo.o_invest.navigation.ROUT_INVEST
 import com.ojijo.o_invest.viewmodel.AuthViewModel
 import kotlin.text.isBlank
 
@@ -53,7 +55,7 @@ fun LoginScreen(
                 Toast.makeText(context, "Invalid Credentials", Toast.LENGTH_SHORT).show()
             } else {
                 if (user.role == "admin") {
-                    navController.navigate(ROUT_HOME)
+                    navController.navigate(ROUT_CONTACT)
                 } else {
                     navController.navigate(ROUT_DASHBOARD)
                 }

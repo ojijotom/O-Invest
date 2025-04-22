@@ -48,7 +48,6 @@ import com.ojijo.o_invest.model.User
 import com.ojijo.o_invest.navigation.ROUT_LOGIN
 import com.ojijo.o_invest.viewmodel.AuthViewModel
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(
@@ -73,81 +72,70 @@ fun RegisterScreen(
         colors = listOf(Color(0xFF00C6FF), Color(0xFF0072FF))
     )
 
+    val textFieldColors = TextFieldDefaults.colors(
+        focusedContainerColor = Color.White.copy(alpha = 0.1f),
+        unfocusedContainerColor = Color.White.copy(alpha = 0.05f),
+        focusedLabelColor = Color.White,
+        unfocusedLabelColor = Color.White.copy(alpha = 0.7f),
+        cursorColor = Color.White
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(gradientBrush)
-            .padding(24.dp),
-        verticalArrangement = Arrangement.Center,
+            .padding(horizontal = 24.dp, vertical = 16.dp),
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.height(50.dp))
+
         Text(
-            "Create Account",
+            text = "Create Account",
             fontSize = 36.sp,
             fontFamily = FontFamily.Cursive,
             color = Color.White
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
-        // Username
         OutlinedTextField(
             value = username,
             onValueChange = { username = it },
             label = { Text("Username") },
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent,
-                focusedLabelColor = Color.Blue,
-                unfocusedLabelColor = Color.Gray,
-                cursorColor = Color.Blue
-            ),
+            colors = textFieldColors,
+            shape = MaterialTheme.shapes.medium,
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(14.dp))
 
-        // Email
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
             label = { Text("Email") },
-            leadingIcon = { Icon(Icons.Filled.Email, contentDescription = "Email Icon") },
+            leadingIcon = { Icon(Icons.Filled.Email, contentDescription = "Email", tint = Color.White) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent,
-                focusedLabelColor = Color.Blue,
-                unfocusedLabelColor = Color.Gray,
-                cursorColor = Color.Blue
-            ),
+            colors = textFieldColors,
+            shape = MaterialTheme.shapes.medium,
             modifier = Modifier.fillMaxWidth()
         )
 
+        Spacer(modifier = Modifier.height(14.dp))
 
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // Phone
         OutlinedTextField(
             value = phone,
             onValueChange = { phone = it },
             label = { Text("Phone") },
-            leadingIcon = { Icon(Icons.Filled.Phone, contentDescription = "Phone Icon") },
+            leadingIcon = { Icon(Icons.Filled.Phone, contentDescription = "Phone", tint = Color.White) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent,
-                focusedLabelColor = Color.Blue,
-                unfocusedLabelColor = Color.Gray,
-                cursorColor = Color.Blue
-            ),
+            colors = textFieldColors,
+            shape = MaterialTheme.shapes.medium,
             modifier = Modifier.fillMaxWidth()
         )
 
+        Spacer(modifier = Modifier.height(14.dp))
 
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // Role Dropdown
         ExposedDropdownMenuBox(
             expanded = expanded,
             onExpandedChange = { expanded = !expanded }
@@ -158,13 +146,8 @@ fun RegisterScreen(
                 readOnly = true,
                 label = { Text("Select Role") },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
-                    focusedLabelColor = Color.Blue,
-                    unfocusedLabelColor = Color.Gray,
-                    cursorColor = Color.Blue
-                ),
+                colors = textFieldColors,
+                shape = MaterialTheme.shapes.medium,
                 modifier = Modifier
                     .menuAnchor()
                     .fillMaxWidth()
@@ -186,65 +169,54 @@ fun RegisterScreen(
             }
         }
 
+        Spacer(modifier = Modifier.height(14.dp))
 
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // Password
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
             label = { Text("Password") },
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Password Icon") },
+            leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Password Icon", tint = Color.White) },
             trailingIcon = {
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
                     Icon(
                         imageVector = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                        contentDescription = if (passwordVisible) "Hide Password" else "Show Password"
+                        contentDescription = null,
+                        tint = Color.White
                     )
                 }
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent,
-                focusedLabelColor = Color.Blue,
-                unfocusedLabelColor = Color.Gray,
-                cursorColor = Color.Blue
-            ),
+            colors = textFieldColors,
+            shape = MaterialTheme.shapes.medium,
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(14.dp))
 
         OutlinedTextField(
             value = confirmPassword,
             onValueChange = { confirmPassword = it },
             label = { Text("Confirm Password") },
             visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Confirm Password Icon") },
+            leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Confirm Password Icon", tint = Color.White) },
             trailingIcon = {
                 IconButton(onClick = { confirmPasswordVisible = !confirmPasswordVisible }) {
                     Icon(
                         imageVector = if (confirmPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                        contentDescription = if (confirmPasswordVisible) "Hide Password" else "Show Password"
+                        contentDescription = null,
+                        tint = Color.White
                     )
                 }
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent,
-                focusedLabelColor = Color.Blue,
-                unfocusedLabelColor = Color.Gray,
-                cursorColor = Color.Blue
-            ),
+            colors = textFieldColors,
+            shape = MaterialTheme.shapes.medium,
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(26.dp))
 
-        // Register Button
         Button(
             onClick = {
                 if (username.isBlank() || email.isBlank() || phone.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
@@ -258,12 +230,13 @@ fun RegisterScreen(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp),
+                .height(52.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF0072FF),
-                contentColor = Color.White
+                containerColor = Color.White,
+                contentColor = Color(0xFF0072FF)
             ),
-            shape = MaterialTheme.shapes.medium
+            shape = MaterialTheme.shapes.medium,
+            elevation = ButtonDefaults.buttonElevation(6.dp)
         ) {
             Text(
                 text = "Register",
@@ -271,8 +244,7 @@ fun RegisterScreen(
             )
         }
 
-
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(22.dp))
 
         TextButton(onClick = { navController.navigate(ROUT_LOGIN) }) {
             Text("Already have an account? Login", color = Color.White)

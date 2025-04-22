@@ -19,11 +19,15 @@ import com.ojijo.o_invest.ui.screens.splash.SplashScreen
 import com.ojijo.o_invest.ui.screens.start.StartScreen
 import com.ojijo.o_invest.viewmodel.AuthViewModel
 import com.ojijo.o_invest.ui.screens.auth.LoginScreen
+import com.ojijo.o_invest.ui.screens.billsairtime.BillsAirtimeScreen
 import com.ojijo.o_invest.ui.screens.contact.ContactScreen
 import com.ojijo.o_invest.ui.screens.invest.InvestScreen
+import com.ojijo.o_invest.ui.screens.mpesapaybill.MpesaPaybillScreen
+import com.ojijo.o_invest.ui.screens.profile.ProfileScreen
+import com.ojijo.o_invest.ui.screens.reversal.ReversalScreen
+import com.ojijo.o_invest.ui.screens.sendmoney.SendmoneyScreen
 import com.ojijo.o_invest.ui.screens.service.ServiceScreen
-import com.ojijo.o_invest.ui.screens.auth.RegisterScreen
-
+import com.ojijo.o_invest.ui.screens.withdrawal.WithdrawScreen
 
 
 @Composable
@@ -72,6 +76,27 @@ fun AppNavHost(
             composable(ROUT_CONTACT) {
                 ContactScreen(navController)
             }
+        composable(ROUT_PROFILE) {
+            ProfileScreen(navController)
+        }
+        composable(ROUT_WITHDRAW) {
+            WithdrawScreen(navController)
+        }
+        composable(ROUT_MPESAPAYBILL) {
+            MpesaPaybillScreen(navController)
+        }
+        composable(ROUT_REVERSAL) {
+            ReversalScreen(navController)
+        }
+        composable(ROUT_SENDMONEY) {
+            SendmoneyScreen(navController)
+        }
+        composable(ROUT_BILLSAIRTIME) {
+            BillsAirtimeScreen(navController)
+        }
+
+
+
 
 
 

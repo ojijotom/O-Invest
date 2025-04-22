@@ -45,8 +45,14 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ojijo.o_invest.R
 import com.ojijo.o_invest.navigation.ROUT_ABOUT
+import com.ojijo.o_invest.navigation.ROUT_BILLSAIRTIME
 import com.ojijo.o_invest.navigation.ROUT_DASHBOARD
 import com.ojijo.o_invest.navigation.ROUT_HOME
+import com.ojijo.o_invest.navigation.ROUT_MPESAPAYBILL
+import com.ojijo.o_invest.navigation.ROUT_PROFILE
+import com.ojijo.o_invest.navigation.ROUT_REVERSAL
+import com.ojijo.o_invest.navigation.ROUT_SENDMONEY
+import com.ojijo.o_invest.navigation.ROUT_WITHDRAW
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -78,7 +84,7 @@ fun DashboardScreen(navController: NavController) {
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = { navController.navigate(ROUT_PROFILE) }) {
                         Icon(
                             imageVector = Icons.Default.Menu,
                             contentDescription = "Menu Icon",
@@ -150,8 +156,8 @@ fun DashboardScreen(navController: NavController) {
             DashboardOptionsRow(
                 navController,
                 listOf(
-                    DashboardOptionData("Send Money", R.drawable.img_27, ROUT_HOME),
-                    DashboardOptionData("Mpesa Paybill", R.drawable.img_28, ROUT_ABOUT)
+                    DashboardOptionData("Send Money", R.drawable.img_27, ROUT_SENDMONEY),
+                    DashboardOptionData("Mpesa Paybill", R.drawable.img_28, ROUT_MPESAPAYBILL)
                 ),
                 cardModifier, imageModifier, textStyle
             )
@@ -162,8 +168,8 @@ fun DashboardScreen(navController: NavController) {
             DashboardOptionsRow(
                 navController,
                 listOf(
-                    DashboardOptionData("Reversal", R.drawable.img_29, null),
-                    DashboardOptionData("Bills & Airtime", R.drawable.img_44, ROUT_DASHBOARD)
+                    DashboardOptionData("Reversal", R.drawable.img_29, ROUT_REVERSAL),
+                    DashboardOptionData("Bills & Airtime", R.drawable.img_44, ROUT_BILLSAIRTIME)
                 ),
                 cardModifier, imageModifier, textStyle
             )
@@ -174,8 +180,8 @@ fun DashboardScreen(navController: NavController) {
             DashboardOptionsRow(
                 navController,
                 listOf(
-                    DashboardOptionData("Top Up", R.drawable.img_43, null),
-                    DashboardOptionData("Withdraw", R.drawable.img_35, ROUT_DASHBOARD)
+                    DashboardOptionData("Top Up", R.drawable.img_43, ROUT_MPESAPAYBILL),
+                    DashboardOptionData("Withdraw", R.drawable.img_35, ROUT_WITHDRAW)
                 ),
                 cardModifier, imageModifier, textStyle
             )

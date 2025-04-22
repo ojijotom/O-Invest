@@ -167,7 +167,7 @@ fun ContactScreen(navController: NavController) {
                     icon = Icons.Default.Call,
                     onClick = {
                         val callIntent = Intent(Intent.ACTION_DIAL).apply {
-                            data = "tel:0720245837".toUri()
+                            data = "tel:0721956607".toUri()
                         }
                         mContext.startActivity(callIntent)
                     }
@@ -178,8 +178,8 @@ fun ContactScreen(navController: NavController) {
                     icon = Icons.Default.Message,
                     onClick = {
                         val smsIntent = Intent(Intent.ACTION_SENDTO).apply {
-                            data = "smsto:0720245837".toUri()
-                            putExtra("sms_body", "Hello Glory, how was your day?")
+                            data = "smsto:0721956607".toUri()
+                            putExtra("sms_body", "Hello Ojijo, how was your day?")
                         }
                         mContext.startActivity(smsIntent)
                     }

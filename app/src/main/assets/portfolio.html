@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O-Invest - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <style>
+        body {
+          font-family: 'Inter', sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #f9f9f9;
+          color: #333;
+        }
+        header {
+          background: #4F46E5;
+          color: white;
+          padding: 3rem 2rem;
+          text-align: center;
+        }
+        header img {
+          width: 120px;
+          height: auto;
+          margin-bottom: 1rem;
+        }
+        section {
+          padding: 4rem 2rem;
+          max-width: 1000px;
+          margin: auto;
+        }
+        h1, h2 {
+          margin-bottom: 1rem;
+        }
+        p {
+          line-height: 1.6;
+        }
+        .features {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 2rem;
+          margin-top: 2rem;
+        }
+        .feature {
+          background: white;
+          border-radius: 1rem;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+          padding: 2rem;
+        }
+        footer {
+          text-align: center;
+          padding: 2rem;
+          font-size: 0.9rem;
+          background: #e0e7ff;
+        }
+        .download-btn {
+          display: inline-block;
+          margin-top: 2rem;
+          padding: 0.8rem 2rem;
+          background-color: #4F46E5;
+          color: white;
+          text-decoration: none;
+          border-radius: 0.5rem;
+          font-weight: 600;
+          animation: bounce 2s infinite;
+        }
+        .profile-section {
+          text-align: center;
+          margin-top: -2rem;
+          padding: 2rem;
+        }
+        .profile-section img {
+          width: 180px;
+          height: 180px;
+          border-radius: 50%;
+          object-fit: cover;
+          margin-bottom: 1rem;
+          border: 5px solid #4F46E5;
+        }
+        .profile-section h2 {
+          margin-bottom: 0.5rem;
+        }
+        @keyframes bounce {
+          0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+          40% {transform: translateY(-10px);}
+          60% {transform: translateY(-5px);}
+        }
+    </style>
+</head>
+<body>
+
+<header data-aos="fade-down">
+    <img src="https://i.imgur.com/EV9pP78.jpg" alt="O-Invest Logo">
+    <h1>O-Invest</h1>
+    <p>Modern Investment Management App</p>
+    <a href="#" class="download-btn" onclick="downloadPDF()">Download Portfolio as PDF</a>
+</header>
+
+<div class="profile-section" data-aos="fade-up">
+    <img src="https://i.imgur.com/EV9pP78.jpg" alt="Ojijo Tom">
+    <h2>Ojijo Tom</h2>
+    <p>Co-founder & Developer of O-Invest</p>
+</div>
+
+<div id="portfolio-content">
+    <section data-aos="fade-up">
+        <h2>About O-Invest</h2>
+        <p>O-Invest is a modern investment management application built using Kotlin, designed to empower investors to manage and grow their portfolios with ease. With real-time tracking, secure transactions, and a minimalist design, O-Invest makes smart investing accessible to all.</p>
+    </section>
+
+    <section data-aos="fade-up">
+        <h2>Key Features</h2>
+        <div class="features">
+            <div class="feature" data-aos="zoom-in">
+                <h3>Portfolio Tracking</h3>
+                <p>Monitor investments and returns in real-time with detailed analytics.</p>
+            </div>
+            <div class="feature" data-aos="zoom-in">
+                <h3>Investment Recommendations</h3>
+                <p>Personalized suggestions tailored to your risk profile and goals.</p>
+            </div>
+            <div class="feature" data-aos="zoom-in">
+                <h3>Secure Transactions</h3>
+                <p>Industry-standard encryption ensures your financial activities are protected.</p>
+            </div>
+            <div class="feature" data-aos="zoom-in">
+                <h3>Modern UI/UX</h3>
+                <p>Enjoy a clean, intuitive, and seamless user experience crafted for investors.</p>
+            </div>
+        </div>
+    </section>
+
+    <section data-aos="fade-up">
+        <h2>Technology Stack</h2>
+        <p><strong>Language:</strong> Kotlin (Native Android App)</p>
+        <p><strong>Database:</strong> Local Persistence with Cloud Sync Option</p>
+        <p><strong>Security:</strong> Encrypted Transactions</p>
+        <p><strong>Design:</strong> Minimalist and Modern</p>
+    </section>
+
+    <section data-aos="fade-up">
+        <h2>Target Audience</h2>
+        <p>O-Invest is ideal for individual investors, financial advisors, and young professionals looking for a reliable and easy-to-use investment management platform.</p>
+    </section>
+
+    <section data-aos="fade-up">
+        <h2>Future Plans</h2>
+        <ul>
+            <li>Stock exchange and crypto market integrations</li>
+            <li>AI-powered financial advising</li>
+            <li>iOS and Web platform versions</li>
+        </ul>
+    </section>
+</div>
+
+<footer data-aos="fade-up">
+    &copy; 2025 O-Invest. All rights reserved.
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+    AOS.init();
+    function downloadPDF() {
+      const element = document.getElementById('portfolio-content');
+      html2pdf().from(element).save('O-Invest-Portfolio.pdf');
+    }
+</script>
+
+</body>
+</html>

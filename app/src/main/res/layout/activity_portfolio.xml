@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center"
+    android:background="@android:color/white">
+
+    <!-- Portfolio Photo -->
+    <ImageView
+        android:id="@+id/portfolioPhoto"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ojijo"  
+    android:contentDescription="Ojijo Tom's Photo"
+    android:layout_gravity="center"/>
+
+    <!-- Portfolio Name -->
+    <TextView
+        android:id="@+id/portfolioName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OJIJO TOM"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center"/>
+
+    <!-- Portfolio Bio -->
+    <TextView
+        android:id="@+id/portfolioBio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I am the co-founder and developer of this app."
+        android:textSize="14sp"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center"/>
+</LinearLayout>

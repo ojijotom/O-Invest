@@ -32,7 +32,6 @@ fun RegisterScreen(
 ) {
     var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
-    var phone by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
@@ -115,6 +114,8 @@ fun RegisterScreen(
         )
 
         Spacer(modifier = Modifier.height(14.dp))
+
+
 
         // Investor Type dropdown
         ExposedDropdownMenuBox(
@@ -229,7 +230,7 @@ fun RegisterScreen(
             onClick = {
                 if (!acceptedTerms) {
                     Toast.makeText(context, "Please accept the Privacy Policy and Terms", Toast.LENGTH_SHORT).show()
-                } else if (username.isBlank() || email.isBlank() || phone.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
+                } else if (username.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
                     Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show()
                 } else if (password != confirmPassword) {
                     Toast.makeText(context, "Passwords do not match", Toast.LENGTH_SHORT).show()

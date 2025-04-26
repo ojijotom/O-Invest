@@ -15,7 +15,6 @@ import com.ojijo.o_invest.repository.UserRepository
 import com.ojijo.o_invest.ui.screens.about.AboutScreen
 import com.ojijo.o_invest.ui.screens.dashboard.DashboardScreen
 import com.ojijo.o_invest.ui.screens.form.FormScreen
-import com.ojijo.o_invest.ui.screens.intent.IntentScreen
 import com.ojijo.o_invest.ui.screens.splash.SplashScreen
 import com.ojijo.o_invest.ui.screens.start.StartScreen
 import com.ojijo.o_invest.viewmodel.AuthViewModel
@@ -31,6 +30,7 @@ import com.ojijo.o_invest.ui.screens.service.ServiceScreen
 import com.ojijo.o_invest.ui.screens.withdrawal.WithdrawScreen
 import com.ojijo.o_invest.ui.HomeScreen
 import com.ojijo.o_invest.ui.screens.portfolio.PortfolioScreen
+import com.ojijo.o_invest.ui.screens.setting.SettingsScreen
 
 
 @Composable
@@ -57,8 +57,8 @@ fun AppNavHost(
             composable(ROUT_START) {
                 StartScreen(navController)
             }
-            composable(ROUT_INTENT) {
-                IntentScreen(navController)
+            composable(ROUT_SETTING) {
+                SettingsScreen(navController)
             }
             composable(ROUT_DASHBOARD) {
                 DashboardScreen(navController)

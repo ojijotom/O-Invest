@@ -83,7 +83,7 @@ class InvestmentViewModel(application: Application) : AndroidViewModel(applicati
     // Flutterwave Test Secret Key
     private val flutterwaveSecretKey = "FLWSECK_TEST-742115817aae25d96f4889229a1f726b-X"
 
-    fun depositWithFlutterwave(amount: Double, context: Context) {
+    fun depositWithFlutterwave(amount: Double, phoneNumber: String, context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
             val client = OkHttpClient()
             val json = """
@@ -94,8 +94,8 @@ class InvestmentViewModel(application: Application) : AndroidViewModel(applicati
                     "redirect_url": "https://yourapp.com/callback",
                     "payment_options": "mpesa",
                     "customer": {
-                        "email": "user@example.com",
-                        "phonenumber": "2547XXXXXXXX",
+                        "email": "ojijotom4@gmail.com",
+                        "phonenumber": "$phoneNumber",
                         "name": "John Doe"
                     },
                     "customizations": {
@@ -107,7 +107,7 @@ class InvestmentViewModel(application: Application) : AndroidViewModel(applicati
             val body = json.toRequestBody("application/json".toMediaType())
             val request = Request.Builder()
                 .url("https://api.flutterwave.com/v3/payments")
-                .addHeader("Authorization", "Bearer $flutterwaveSecretKey")  // Added the key here
+                .addHeader("Authorization", "Bearer $flutterwaveSecretKey")
                 .post(body)
                 .build()
 
@@ -181,6 +181,10 @@ fun InvestScreen(navController: NavController, viewModel: InvestmentViewModel = 
     val transactions by viewModel.transactions.collectAsState(initial = emptyList())
     val balance by viewModel.balance.collectAsState(initial = 0.0)
     var depositAmount by remember { mutableStateOf("") }
+    var phoneNumber by remember { mutableStateOf("") } // Added phone number state
+
+    // Regex for validating Kenyan phone number
+    val isPhoneNumberValid = phoneNumber.matches(Regex("^2547[0-9]{8}$"))
 
     Scaffold(
         topBar = {
@@ -205,6 +209,7 @@ fun InvestScreen(navController: NavController, viewModel: InvestmentViewModel = 
 
                 Spacer(modifier = Modifier.height(24.dp))
 
+                // Deposit Amount Input
                 OutlinedTextField(
                     value = depositAmount,
                     onValueChange = { depositAmount = it },
@@ -215,25 +220,49 @@ fun InvestScreen(navController: NavController, viewModel: InvestmentViewModel = 
 
                 Spacer(modifier = Modifier.height(16.dp))
 
+                // Phone Number Input
+                OutlinedTextField(
+                    value = phoneNumber,
+                    onValueChange = { phoneNumber = it },
+                    label = { Text("Enter Phone Number (2547XXXXXXX)") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                // Show error if phone number is not valid
+                if (phoneNumber.isNotEmpty() && !isPhoneNumberValid) {
+                    Text(
+                        "Please enter a valid Kenyan phone number starting with 2547...",
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Deposit Button
                 Button(
                     onClick = {
                         val amount = depositAmount.toDoubleOrNull()
-                        if (amount != null && amount > 0) {
-                            viewModel.depositWithFlutterwave(amount, context)
+                        if (amount != null && amount > 0 && isPhoneNumberValid) {
+                            // Pass phone number to the deposit function
+                            viewModel.depositWithFlutterwave(amount, phoneNumber, context)
                             depositAmount = ""
+                            phoneNumber = "" // Clear phone number after successful transaction
                         } else {
-                            Toast.makeText(context, "Enter a valid amount", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Enter a valid amount and phone number", Toast.LENGTH_SHORT).show()
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    enabled = depositAmount.isNotBlank()
+                    enabled = depositAmount.isNotBlank() && isPhoneNumberValid
                 ) {
                     Text("Deposit with M-Pesa")
                 }
 
                 Spacer(modifier = Modifier.height(32.dp))
-                Text("Recent Transactions", style = MaterialTheme.typography.titleMedium)
 
+                // Recent Transactions Section
+                Text("Recent Transactions", style = MaterialTheme.typography.titleMedium)
                 Spacer(modifier = Modifier.height(8.dp))
 
                 LazyColumn {

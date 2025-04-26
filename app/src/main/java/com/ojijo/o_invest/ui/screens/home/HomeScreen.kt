@@ -24,6 +24,7 @@ import androidx.navigation.compose.rememberNavController
 import com.ojijo.o_invest.R
 import com.ojijo.o_invest.navigation.ROUT_INVEST
 import com.ojijo.o_invest.navigation.ROUT_PORTFOLIO
+import com.ojijo.o_invest.navigation.ROUT_SETTING
 
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -80,13 +81,13 @@ fun InvestmentStatsSection() {
             Text(text = "Investment Overview", fontSize = 18.sp, color = Color.Black)
             Spacer(modifier = Modifier.height(16.dp))
             Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-                InvestmentStatItem("Total Investment", "$15,000", Icons.Default.AttachMoney)
+                InvestmentStatItem("Total Investment", "KSh 2,250,000", Icons.Default.AttachMoney)
                 InvestmentStatItem("ROI", "5.6%", Icons.Default.TrendingUp)
             }
             Spacer(modifier = Modifier.height(16.dp))
             Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
                 InvestmentStatItem("Active Projects", "5", Icons.Default.Work)
-                InvestmentStatItem("Net Worth", "$500,000", Icons.Default.AccountBalance)
+                InvestmentStatItem("Net Worth", "KSh 75,000,000", Icons.Default.AccountBalance)
             }
         }
     }
@@ -96,7 +97,7 @@ fun InvestmentStatsSection() {
 fun InvestmentStatItem(title: String, value: String, icon: ImageVector) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(8.dp) // No weight needed if using SpaceBetween
+        modifier = Modifier.padding(8.dp)
     ) {
         Icon(imageVector = icon, contentDescription = title, modifier = Modifier.size(32.dp), tint = Color(0xFF0072FF))
         Spacer(modifier = Modifier.height(4.dp))
@@ -105,20 +106,15 @@ fun InvestmentStatItem(title: String, value: String, icon: ImageVector) {
     }
 }
 
-
 @Composable
 fun QuickAccessSection(navController: NavController) {
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier.fillMaxWidth()
     ) {
-        QuickAccessItem("Invest Now", Icons.Default.Add, onClick = { navController.navigate(
-            ROUT_INVEST
-        ) })
-        QuickAccessItem("My Portfolio", Icons.Default.PieChart, onClick = { navController.navigate(
-            ROUT_PORTFOLIO
-        ) })
-        QuickAccessItem("Settings", Icons.Default.Settings, onClick = { navController.navigate("settings_screen") })
+        QuickAccessItem("Invest Now", Icons.Default.Add, onClick = { navController.navigate(ROUT_INVEST) })
+        QuickAccessItem("My Portfolio", Icons.Default.PieChart, onClick = { navController.navigate(ROUT_PORTFOLIO) })
+        QuickAccessItem("Settings", Icons.Default.Settings, onClick = { navController.navigate(ROUT_SETTING) })
     }
 }
 
@@ -139,7 +135,11 @@ fun QuickAccessItem(title: String, icon: ImageVector, onClick: () -> Unit) {
 @Composable
 fun RecentActivitiesSection() {
     Text(text = "Recent Activities", fontSize = 18.sp, color = Color.White)
-    val activities = listOf("Invested $1,000 in Project A", "Sold 50 shares of XYZ", "Earned $200 in dividends")
+    val activities = listOf(
+        "Invested KSh 150,000 in Project A",
+        "Sold 50 shares of XYZ",
+        "Earned KSh 30,000 in dividends"
+    )
     Spacer(modifier = Modifier.height(8.dp))
     Column {
         activities.forEach { activity ->
@@ -171,8 +171,6 @@ fun RecentActivityItem(activity: String) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomeScreenPreview() {
-    // Create a dummy NavController for preview purposes
     val navController = rememberNavController()
-
     HomeScreen(navController = navController)
 }

@@ -7,7 +7,7 @@
 
 ---
 
-**O-Invest** is a powerful Android application designed to help users **track investments**, **simulate portfolios**, and access **real-time market data**. Whether you are a beginner or an experienced investor, **O-Invest** offers intuitive tools and educational features to help you make better investment decisions.
+**O-Invest** is a powerful Android application designed for **personal investment tracking** and **portfolio simulation**. It provides real-time market data and educational tools to help you make informed investment decisions. Whether you are a beginner or an experienced investor, **O-Invest** is a great tool for managing and learning about investments.
 
 ---
 
@@ -37,9 +37,66 @@
 
 ## 📲 Installation
 
-To run the **O-Invest** app locally:
+This project is intended for **personal use** but is **open to contributions** under the guidance and approval of the developer and co-founder. To run the **O-Invest** app on your Android device:
 
-1. **Clone** the repository:
+1. **Download the APK** (if available) or build it from source using Android Studio.
+2. Open the project in **Android Studio**.
+3. **Sync** the project with Gradle files.
+4. **Build** the project and run it on an emulator or Android device.
 
-```bash
-git clone https://github.com/ojijotom/O-Invest.git
+---
+
+## 🤝 Contributing
+
+Contributions are **welcome**! However, all contributions to the **O-Invest** project should be done **under the concern and approval of the developer and co-founder**. Please follow the guidelines below:
+
+1. **Fork** the repository.
+2. Create a **new branch** (`git checkout -b feature-branch`).
+3. Make your changes and **commit** them (`git commit -am 'Add new feature'`).
+4. Push to the branch (`git push origin feature-branch`).
+5. **Open a pull request**.
+6. **Contact the developer (@ojijotom)** for prior approval before starting any significant contribution.
+
+**Please note:** Major contributions and changes to the project must be discussed and approved by the developer and co-founder before submitting a pull request.
+
+---
+
+## 🔧 TODO / Roadmap
+
+Here are the features and improvements planned for the future of **O-Invest**:
+
+- [ ] **User Authentication**: Add user login/signup functionality for personalized tracking and data storage.
+- [ ] **Portfolio Analytics**: Provide deeper analytics on portfolios, such as risk assessment, historical performance, and suggestions for improvement.
+- [ ] **Investment News Feed**: Integrate a news feed to provide the latest updates related to stocks, market trends, and investments.
+- [ ] **Social Sharing**: Allow users to share their portfolios or achievements with friends on social media.
+- [ ] **Support for Additional Assets**: Include support for other asset classes such as real estate, cryptocurrencies, bonds, and commodities.
+- [ ] **Advanced Educational Tools**: Build more educational resources for beginners, including tutorials, videos, and investment guides.
+- [ ] **Dark Mode**: Implement a dark mode for a better user experience.
+- [ ] **Multi-language Support**: Add support for multiple languages to make the app more accessible globally.
+- [ ] **Security Enhancements**: Add more security features, such as encryption for sensitive data and two-factor authentication.
+- [ ] **UI/UX Redesign**: Improve the user interface for better navigation and user experience.
+- [ ] **Integration with External Financial Services**: Integrate with external services like tax calculation tools, financial advisors, or investment firms.
+- [ ] **Push Notification Enhancements**: Allow users to customize their notification preferences (e.g., market alerts, investment updates, etc.).
+- [ ] **API Integrations for Real-Time Data**: Integrate more data providers for real-time stock and market data.
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 👤 Author
+
+**Developed by** [@ojijotom](https://github.com/ojijotom)  
+📧 Contact: ojijotom@gmail.com  
+🔗 GitHub: [github.com/ojijotom/O-Invest](https://github.com/ojijotom/O-Invest)
+
+---
+
+## 🔧 TODO / Roadmap
+
+- [ ] **Feature X**: Description of feature coming soon...
+- [ ] **Feature Y**: Description of feature coming soon...
+- [ ] **Improve UI/UX**: Redesign screens for better user experience.

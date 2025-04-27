@@ -81,6 +81,14 @@ Here are the features and improvements planned for the future of **O-Invest**:
 
 ---
 
+## 🎥 Demo Video
+
+Check out the demo video for more insights about **O-Invest**:
+
+[![O-Invest Demo](https://img.youtube.com/vi/VIDEO_ID/0.jpg)](https://1drv.ms/v/c/943e286eb6452ee1/EbOudHacaSdMrDhQ1-3zrjQBuww6hHsJE5UsDPGKLHOIcw?e=DE4LOC)
+
+---
+
 ## 📄 License
 
 This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
@@ -92,11 +100,3 @@ This project is licensed under the **MIT License** – see the [LICENSE](LICENSE
 **Developed by** [@ojijotom](https://github.com/ojijotom)  
 📧 Contact: ojijotom@gmail.com  
 🔗 GitHub: [github.com/ojijotom/O-Invest](https://github.com/ojijotom/O-Invest)
-
----
-
-## 🔧 TODO / Roadmap
-
-- [ ] **Feature X**: Description of feature coming soon...
-- [ ] **Feature Y**: Description of feature coming soon...
-- [ ] **Improve UI/UX**: Redesign screens for better user experience.

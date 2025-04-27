@@ -1,5 +1,6 @@
 package com.ojijo.o_invest.navigation
 
+import ContactScreen
 import ProfileScreen
 import RegisterScreen
 import androidx.compose.runtime.Composable
@@ -21,14 +22,13 @@ import com.ojijo.o_invest.viewmodel.AuthViewModel
 import com.ojijo.o_invest.ui.screens.auth.LoginScreen
 import com.ojijo.o_invest.ui.screens.billsairtime.BillsAirtimeScreen
 import com.ojijo.o_invest.ui.screens.cameracapture.CameraCaptureScreen
-import com.ojijo.o_invest.ui.screens.contact.ContactScreen
+import com.ojijo.o_invest.ui.screens.home.HomeScreen
 import com.ojijo.o_invest.ui.screens.invest.InvestScreen
 import com.ojijo.o_invest.ui.screens.mpesapaybill.MpesaPaybillScreen
 import com.ojijo.o_invest.ui.screens.reversal.ReversalScreen
 import com.ojijo.o_invest.ui.screens.sendmoney.SendmoneyScreen
 import com.ojijo.o_invest.ui.screens.service.ServiceScreen
 import com.ojijo.o_invest.ui.screens.withdrawal.WithdrawScreen
-import com.ojijo.o_invest.ui.HomeScreen
 import com.ojijo.o_invest.ui.screens.portfolio.PortfolioScreen
 import com.ojijo.o_invest.ui.screens.setting.SettingsScreen
 

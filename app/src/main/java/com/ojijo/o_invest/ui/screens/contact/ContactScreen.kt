@@ -1,6 +1,3 @@
-package com.ojijo.o_invest.ui.screens.contact
-
-import androidx.compose.ui.res.painterResource
 import android.content.Intent
 import android.provider.MediaStore
 import androidx.compose.foundation.background
@@ -22,11 +19,7 @@ import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Message
-import androidx.compose.material.icons.filled.Payments
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material.icons.filled.Share
@@ -36,8 +29,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -49,7 +40,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.R
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -60,10 +50,6 @@ import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.ojijo.o_invest.navigation.ROUT_CONTACT
-import com.ojijo.o_invest.navigation.ROUT_DASHBOARD
-import com.ojijo.o_invest.navigation.ROUT_HOME
-import com.ojijo.o_invest.navigation.ROUT_INVEST
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -89,50 +75,8 @@ fun ContactScreen(navController: NavController) {
             )
         },
 
-        bottomBar = {
-            NavigationBar(containerColor = Color(0xFF1976D2)) {
-                NavigationBarItem(
-                    icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-                    label = { Text("Home") },
-                    selected = selectedIndex == 0,
-                    onClick = {
-                        selectedIndex = 0
-                        navController.navigate(ROUT_HOME)
-                    }
-                )
-                NavigationBarItem(
-                    icon = { Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
-                    label = { Text("Favorites") },
-                    selected = selectedIndex == 1,
-                    onClick = {
-                        selectedIndex = 1
-                        navController.navigate(ROUT_DASHBOARD)
-                    }
-                )
-                NavigationBarItem(
-                    icon = { Icon(Icons.Default.Person, contentDescription = "Contact") },
-                    label = { Text("Contact") },
-                    selected = selectedIndex == 2,
-                    onClick = {
-                        selectedIndex = 2
-                        navController.navigate(ROUT_CONTACT)
-                    }
-                )
-                NavigationBarItem(
-                    icon = { Icon(Icons.Filled.Payments, contentDescription = "Invest") },
-                    label = { Text("Invest") },
-                    selected = selectedIndex == 3,
-                    onClick = {
-                        selectedIndex = 3
-                        navController.navigate(ROUT_INVEST)
-                    }
-                )
-
-
-            }
-
-
-},
+        // Remove the bottomBar here
+        bottomBar = {},  // You can leave it as an empty block, or remove the property entirely.
 
         content = { paddingValues ->
             Column(

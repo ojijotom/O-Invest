@@ -1,51 +1,83 @@
-package com.ojijo.o_invest.ui
+package com.ojijo.o_invest.ui.screens.home
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.ojijo.o_invest.R
+import com.ojijo.o_invest.navigation.ROUT_DASHBOARD
 import com.ojijo.o_invest.navigation.ROUT_INVEST
 import com.ojijo.o_invest.navigation.ROUT_PORTFOLIO
 import com.ojijo.o_invest.navigation.ROUT_SETTING
+import com.ojijo.o_invest.navigation.ROUT_HOME
+import com.ojijo.o_invest.navigation.ROUT_PROFILE
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavController) {
-    val gradient = Brush.verticalGradient(
-        colors = listOf(Color(0xFF00C6FF), Color(0xFF0072FF))
-    )
+    var selectedIndex by remember { mutableStateOf(0) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(gradient)
-            .padding(16.dp)
-    ) {
-        HeaderSection()
-        Spacer(modifier = Modifier.height(16.dp))
-        InvestmentStatsSection()
-        Spacer(modifier = Modifier.height(24.dp))
-        QuickAccessSection(navController)
-        Spacer(modifier = Modifier.height(24.dp))
-        RecentActivitiesSection()
-    }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Home", fontWeight = FontWeight.Bold) },
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFF1976D2),
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White
+                )
+            )
+        },
+        bottomBar = {
+            BottomNavigationBar(
+                navController = navController,
+                selectedIndex = selectedIndex,
+                onItemSelected = { index -> selectedIndex = index }
+            )
+        },
+        content = { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .fillMaxSize()
+                    .background(Color(0xFFF5F5F5))
+                    .padding(16.dp)
+            ) {
+                // Header Section
+                HeaderSection()
+
+                // Investment Stats Section
+                Spacer(modifier = Modifier.height(16.dp))
+                InvestmentStatsSection()
+
+                // Quick Access Section
+                Spacer(modifier = Modifier.height(24.dp))
+                QuickAccessSection(navController)
+
+                // Recent Activities Section
+                Spacer(modifier = Modifier.height(24.dp))
+                RecentActivitiesSection()
+            }
+        }
+    )
 }
 
 @Composable
@@ -58,14 +90,10 @@ fun HeaderSection() {
         Text(
             text = "Welcome to O-Invest",
             fontSize = 24.sp,
-            fontFamily = FontFamily.SansSerif,
-            color = Color.White
+            fontWeight = FontWeight.Bold,
+            color = Color.Black
         )
-        Image(
-            painter = painterResource(id = R.drawable.logo),
-            contentDescription = "App Logo",
-            modifier = Modifier.size(40.dp)
-        )
+        // App logo can be added here
     }
 }
 
@@ -81,13 +109,13 @@ fun InvestmentStatsSection() {
             Text(text = "Investment Overview", fontSize = 18.sp, color = Color.Black)
             Spacer(modifier = Modifier.height(16.dp))
             Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-                InvestmentStatItem("Total Investment", "KSh 2,250,000", Icons.Default.AttachMoney)
-                InvestmentStatItem("ROI", "5.6%", Icons.Default.TrendingUp)
+                InvestmentStatItem("Total Investment", "KSh 0.00", Icons.Default.AttachMoney)
+                InvestmentStatItem("ROI", "0%", Icons.Default.TrendingFlat)
             }
             Spacer(modifier = Modifier.height(16.dp))
             Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-                InvestmentStatItem("Active Projects", "5", Icons.Default.Work)
-                InvestmentStatItem("Net Worth", "KSh 75,000,000", Icons.Default.AccountBalance)
+                InvestmentStatItem("Active Projects", "None", Icons.Default.Work)
+                InvestmentStatItem("Net Worth", "Not available", Icons.Default.AccountBalance)
             }
         }
     }
@@ -126,19 +154,19 @@ fun QuickAccessItem(title: String, icon: ImageVector, onClick: () -> Unit) {
             .clickable { onClick() }
             .padding(8.dp)
     ) {
-        Icon(imageVector = icon, contentDescription = title, modifier = Modifier.size(40.dp), tint = Color.White)
+        Icon(imageVector = icon, contentDescription = title, modifier = Modifier.size(40.dp), tint = Color.Blue)
         Spacer(modifier = Modifier.height(4.dp))
-        Text(text = title, color = Color.White, fontSize = 14.sp)
+        Text(text = title, color = Color.Black, fontSize = 14.sp)
     }
 }
 
 @Composable
 fun RecentActivitiesSection() {
-    Text(text = "Recent Activities", fontSize = 18.sp, color = Color.White)
+    Text(text = "Recent Activities", fontSize = 18.sp, color = Color.Black)
     val activities = listOf(
-        "Invested KSh 150,000 in Project A",
-        "Sold 50 shares of XYZ",
-        "Earned KSh 30,000 in dividends"
+        "Start Investing now to grow your Net worth",
+        "You haven't made any investment",
+        "Explore investment opportunities"
     )
     Spacer(modifier = Modifier.height(8.dp))
     Column {
@@ -168,7 +196,49 @@ fun RecentActivityItem(activity: String) {
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun BottomNavigationBar(navController: NavController, selectedIndex: Int, onItemSelected: (Int) -> Unit) {
+    NavigationBar(containerColor = Color(0xFF1976D2)) {
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
+            label = { Text("Home") },
+            selected = selectedIndex == 0,
+            onClick = {
+                onItemSelected(0)
+                navController.navigate(ROUT_HOME)
+            }
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Dashboard, contentDescription = "Dashboard") }, // Changed icon here
+            label = { Text("Dashboard") }, // Changed label here
+            selected = selectedIndex == 1,
+            onClick = {
+                onItemSelected(1)
+                navController.navigate(ROUT_DASHBOARD) // Adjust routing as needed
+            }
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
+            label = { Text("Profile") },
+            selected = selectedIndex == 2,
+            onClick = {
+                onItemSelected(2)
+                navController.navigate(ROUT_PROFILE) // Adjust routing as needed
+            }
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Filled.Payments, contentDescription = "Invest") },
+            label = { Text("Invest") },
+            selected = selectedIndex == 3,
+            onClick = {
+                onItemSelected(3)
+                navController.navigate(ROUT_INVEST)
+            }
+        )
+    }
+}
+
+@Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
     val navController = rememberNavController()

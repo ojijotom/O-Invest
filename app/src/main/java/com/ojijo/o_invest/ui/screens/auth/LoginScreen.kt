@@ -54,10 +54,10 @@ fun LoginScreen(
             if (user == null) {
                 Toast.makeText(context, "Invalid Credentials", Toast.LENGTH_SHORT).show()
             } else {
-                if (user.role == "admin") {
-                    navController.navigate(ROUT_CONTACT)
+                if (user.role == "Mutual Fund Manager") {
+                    navController.navigate(ROUT_HOME)
                 } else {
-                    navController.navigate(ROUT_DASHBOARD)
+                    navController.navigate(ROUT_HOME)
                 }
             }
         }

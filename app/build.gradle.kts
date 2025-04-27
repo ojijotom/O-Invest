@@ -83,6 +83,16 @@ dependencies {
 
 
 
+    // Networking
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
+    // Accompanist Pager Library (latest stable version)
+    implementation("com.google.accompanist:accompanist-pager:0.24.13-rc") // Ensure correct version
+    implementation("androidx.compose.foundation:foundation:1.5.0")  // Latest stable
+
+    implementation ("com.google.android.exoplayer:exoplayer:2.17.1") //For videosplashscreen
+
+
 
 
 
@@ -93,3 +103,6 @@ dependencies {
     kapt ("androidx.room:room-compiler:2.6.1")
     implementation ("androidx.room:room-ktx:2.6.1")
 }
+
+
+

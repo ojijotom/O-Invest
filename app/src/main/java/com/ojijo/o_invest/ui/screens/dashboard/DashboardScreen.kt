@@ -46,6 +46,7 @@ import androidx.navigation.compose.rememberNavController
 import com.ojijo.o_invest.R
 import com.ojijo.o_invest.navigation.ROUT_ABOUT
 import com.ojijo.o_invest.navigation.ROUT_BILLSAIRTIME
+import com.ojijo.o_invest.navigation.ROUT_CONTACT
 import com.ojijo.o_invest.navigation.ROUT_DASHBOARD
 import com.ojijo.o_invest.navigation.ROUT_HOME
 import com.ojijo.o_invest.navigation.ROUT_MPESAPAYBILL
@@ -84,7 +85,7 @@ fun DashboardScreen(navController: NavController) {
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigate(ROUT_PROFILE) }) {
+                    IconButton(onClick = { navController.navigate(ROUT_CONTACT) }) {
                         Icon(
                             imageVector = Icons.Default.Menu,
                             contentDescription = "Menu Icon",

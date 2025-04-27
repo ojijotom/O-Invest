@@ -5,30 +5,16 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.paint
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -39,37 +25,52 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ojijo.o_invest.R
+import com.ojijo.o_invest.navigation.ROUT_REGISTER
 import com.ojijo.o_invest.navigation.ROUT_START
 import kotlinx.coroutines.delay
 
+// 📦 Carousel item data class
+data class CarouselItem(val title: String, val description: String)
+
 @Composable
 fun SplashScreen(navController: NavController) {
-    // Animation state
     var visible by remember { mutableStateOf(false) }
 
-    // Launch animation + navigate after delay
-    val coroutine = rememberCoroutineScope()
-    LaunchedEffect(true) {
+    val carouselItems = listOf(
+        CarouselItem("Investment Plan 1", "Diversified portfolio for stable growth."),
+        CarouselItem("Investment Plan 2", "Aggressive growth with high risk."),
+        CarouselItem("Investment Plan 3", "Moderate growth with lower risk.")
+    )
+
+    val pagerState = rememberPagerState(
+        initialPage = 0,
+        pageCount = { carouselItems.size }
+    )
+
+    // Auto-slide carousel
+    LaunchedEffect(pagerState.currentPage) {
+        delay(1500)
+        val nextPage = (pagerState.currentPage + 1) % carouselItems.size
+        pagerState.animateScrollToPage(nextPage)
+    }
+
+    // Splash screen timing
+    LaunchedEffect(Unit) {
         visible = true
-        delay(2500)
+        delay(3500)
         navController.navigate(ROUT_START) {
-            popUpTo(0) // Optional: removes Splash from back stack
+            popUpTo(0)
         }
     }
 
-    // UI
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .paint(
-                painter = painterResource(R.drawable.img_25),
-                contentScale = ContentScale.Crop
-            )
+            .background(Color.Blue .copy(alpha = 0.3f))
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.3f)) // dark overlay for better visibility
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
@@ -79,14 +80,38 @@ fun SplashScreen(navController: NavController) {
                 enter = fadeIn(animationSpec = tween(durationMillis = 1500)),
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    HorizontalPager(
+                        state = pagerState,
+                        modifier = Modifier.fillMaxWidth()
+                    ) { page ->
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier.padding(16.dp)
+                        ) {
+                            Text(
+                                text = carouselItems[page].title,
+                                fontSize = 22.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                            Spacer(modifier = Modifier.height(10.dp))
+                            Text(
+                                text = carouselItems[page].description,
+                                fontSize = 16.sp,
+                                color = Color.White
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
                     Image(
-                        painter = painterResource(R.drawable.logo),
+                        painter = painterResource(id = R.drawable.logo),
                         contentDescription = "App Logo",
+                        contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .size(200.dp)
                             .clip(CircleShape)
-                            .border(4.dp, Color.White, CircleShape)
-                            .shadow(8.dp, CircleShape)
                     )
 
                     Spacer(modifier = Modifier.height(20.dp))
@@ -112,8 +137,9 @@ fun SplashScreen(navController: NavController) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun SplashScreenPreview() {
-    SplashScreen(rememberNavController())
+    SplashScreen(navController = rememberNavController())
 }
+

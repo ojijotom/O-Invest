@@ -53,6 +53,7 @@ import com.ojijo.o_invest.navigation.ROUT_MPESAPAYBILL
 import com.ojijo.o_invest.navigation.ROUT_PROFILE
 import com.ojijo.o_invest.navigation.ROUT_REVERSAL
 import com.ojijo.o_invest.navigation.ROUT_SENDMONEY
+import com.ojijo.o_invest.navigation.ROUT_TOPUP
 import com.ojijo.o_invest.navigation.ROUT_WITHDRAW
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -181,7 +182,7 @@ fun DashboardScreen(navController: NavController) {
             DashboardOptionsRow(
                 navController,
                 listOf(
-                    DashboardOptionData("Top Up", R.drawable.img_43, ROUT_MPESAPAYBILL),
+                    DashboardOptionData("Top Up", R.drawable.img_43, ROUT_TOPUP),
                     DashboardOptionData("Withdraw", R.drawable.img_35, ROUT_WITHDRAW)
                 ),
                 cardModifier, imageModifier, textStyle

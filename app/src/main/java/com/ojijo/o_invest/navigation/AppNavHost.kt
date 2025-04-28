@@ -31,6 +31,7 @@ import com.ojijo.o_invest.ui.screens.service.ServiceScreen
 import com.ojijo.o_invest.ui.screens.withdrawal.WithdrawScreen
 import com.ojijo.o_invest.ui.screens.portfolio.PortfolioScreen
 import com.ojijo.o_invest.ui.screens.setting.SettingsScreen
+import com.ojijo.o_invest.ui.screens.topup.TopUpScreen
 
 
 @Composable
@@ -103,6 +104,9 @@ fun AppNavHost(
         }
         composable(ROUT_PORTFOLIO) {
             PortfolioScreen(navController)
+        }
+        composable(ROUT_TOPUP) {
+            TopUpScreen(navController)
         }
 
 

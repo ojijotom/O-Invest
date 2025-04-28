@@ -18,6 +18,7 @@ const val ROUT_MPESAPAYBILL = "mpesapaybill"
 const val ROUT_CAMERACAPTURE = "camera"
 const val ROUT_PORTFOLIO = "portfolio"
 const val ROUT_SETTING = "setting"
+const val ROUT_TOPUP = "topup"
 
 const val ROUT_REGISTER = "Register"
 const val ROUT_LOGIN = "Login"

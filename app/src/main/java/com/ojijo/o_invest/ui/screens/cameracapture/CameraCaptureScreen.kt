@@ -1,6 +1,8 @@
 package com.ojijo.o_invest.ui.screens.cameracapture
 
+import android.app.Activity
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
@@ -18,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -119,6 +122,12 @@ fun CameraCaptureScreen(navController: NavController) {
     var imageCapture by remember { mutableStateOf<ImageCapture?>(null) }
 
     val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
+
+    // Runtime permission request if needed
+    val hasCameraPermission = ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+    if (!hasCameraPermission) {
+        ActivityCompat.requestPermissions(context as Activity, arrayOf(android.Manifest.permission.CAMERA), 101)
+    }
 
     LaunchedEffect(Unit) {
         val cameraProvider = cameraProviderFuture.get()

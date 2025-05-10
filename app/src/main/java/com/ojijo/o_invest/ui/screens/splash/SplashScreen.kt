@@ -11,6 +11,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,7 +30,6 @@ import com.ojijo.o_invest.navigation.ROUT_REGISTER
 import com.ojijo.o_invest.navigation.ROUT_START
 import kotlinx.coroutines.delay
 
-// 📦 Carousel item data class
 data class CarouselItem(val title: String, val description: String)
 
 @Composable
@@ -66,7 +66,7 @@ fun SplashScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Blue .copy(alpha = 0.3f))
+            .background(brush = androidx.compose.ui.graphics.Brush.verticalGradient(listOf(Color(0xFF0D47A1), Color(0xFF1976D2))))
     ) {
         Column(
             modifier = Modifier
@@ -98,38 +98,47 @@ fun SplashScreen(navController: NavController) {
                             Text(
                                 text = carouselItems[page].description,
                                 fontSize = 16.sp,
-                                color = Color.White
+                                color = Color.White.copy(alpha = 0.8f)
                             )
                         }
                     }
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    Image(
-                        painter = painterResource(id = R.drawable.logo),
-                        contentDescription = "App Logo",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .size(200.dp)
-                            .clip(CircleShape)
-                    )
+                    // Animated Logo with Zoom-In Effect
+                    AnimatedVisibility(
+                        visible = visible,
+                        enter = fadeIn(animationSpec = tween(durationMillis = 1500))
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.logo),
+                            contentDescription = "App Logo",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .size(180.dp)
+                                .clip(CircleShape)
+                                .padding(12.dp)
+                        )
+                    }
 
                     Spacer(modifier = Modifier.height(20.dp))
 
+                    // Stylish App Name
                     Text(
                         text = "O-Invest",
-                        fontSize = 26.sp,
+                        fontSize = 30.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
-                        letterSpacing = 2.sp
+                        letterSpacing = 3.sp
                     )
 
                     Spacer(modifier = Modifier.height(10.dp))
 
+                    // Stylish Circular Progress Indicator
                     CircularProgressIndicator(
                         color = Color.White,
-                        strokeWidth = 2.dp,
-                        modifier = Modifier.size(30.dp)
+                        strokeWidth = 3.dp,
+                        modifier = Modifier.size(40.dp)
                     )
                 }
             }
@@ -142,4 +151,3 @@ fun SplashScreen(navController: NavController) {
 fun SplashScreenPreview() {
     SplashScreen(navController = rememberNavController())
 }
-

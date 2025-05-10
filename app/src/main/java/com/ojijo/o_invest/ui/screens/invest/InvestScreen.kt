@@ -9,10 +9,10 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.foundation.lazy.items
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -31,42 +31,45 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.util.*
 
-@Entity(tableName = "deposits")
-data class DepositEntity(
+// ------------------ Room Entities & DAO ------------------
+
+@Entity(tableName = "investments")
+data class Investment(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val amount: Double,
     val phoneNumber: String,
-    val timestamp: Long,
-    val description: String
+    val timestamp: String
 )
 
 @Dao
-interface DepositDao {
-    @Insert
-    suspend fun insert(deposit: DepositEntity)
-
-    @Query("DELETE FROM deposits")
-    suspend fun clearAll()
+interface InvestmentDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertInvestment(investment: Investment)
 }
 
-@Database(entities = [DepositEntity::class], version = 1)
-abstract class DepositDatabase : RoomDatabase() {
-    abstract fun depositDao(): DepositDao
+@Database(entities = [Investment::class], version = 1)
+abstract class InvestmentDatabase : RoomDatabase() {
+    abstract fun investmentDao(): InvestmentDao
 
     companion object {
-        @Volatile private var INSTANCE: DepositDatabase? = null
+        @Volatile
+        private var INSTANCE: InvestmentDatabase? = null
 
-        fun getInstance(context: Context): DepositDatabase {
+        fun getDatabase(context: Context): InvestmentDatabase {
             return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: Room.databaseBuilder(
+                val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    DepositDatabase::class.java,
-                    "deposit_db"
-                ).build().also { INSTANCE = it }
+                    InvestmentDatabase::class.java,
+                    "InvestmentDatabase"
+                ).build()
+                INSTANCE = instance
+                instance
             }
         }
     }
 }
+
+// ------------------ ViewModel ------------------
 
 class InvestmentViewModel : ViewModel() {
     private val flutterwaveSecretKey = "FLWSECK_TEST-4b97cd352cf15506bcf4a947e9df5b86-X"
@@ -77,10 +80,12 @@ class InvestmentViewModel : ViewModel() {
     private var _balance = mutableStateOf(0.0)
     val balance: State<Double> get() = _balance
 
-    fun depositWithFlutterwave(amount: Double, phoneNumber: String, context: Context) {
-        val db = DepositDatabase.getInstance(context)
-        val dao = db.depositDao()
-
+    fun depositWithFlutterwave(
+        amount: Double,
+        phoneNumber: String,
+        context: Context,
+        db: InvestmentDatabase
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             val client = OkHttpClient()
             val json = """
@@ -115,17 +120,19 @@ class InvestmentViewModel : ViewModel() {
                     val jsonObj = JSONObject(responseBody)
                     val link = jsonObj.getJSONObject("data").getString("link")
 
-                    val description = "Deposited KES $amount on ${Date()}"
-                    val depositEntity = DepositEntity(
-                        amount = amount,
-                        phoneNumber = phoneNumber,
-                        timestamp = System.currentTimeMillis(),
-                        description = description
-                    )
-                    dao.insert(depositEntity)
-
-                    _recentActivities.add(description)
+                    // Update UI-related state
+                    val date = Date().toString()
+                    _recentActivities.add("Deposited KES $amount on $date")
                     _balance.value += amount
+
+                    // Save to Room database
+                    db.investmentDao().insertInvestment(
+                        Investment(
+                            amount = amount,
+                            phoneNumber = phoneNumber,
+                            timestamp = date
+                        )
+                    )
 
                     Handler(Looper.getMainLooper()).post {
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
@@ -146,15 +153,12 @@ class InvestmentViewModel : ViewModel() {
         }
     }
 
-    fun clearActivities(context: Context) {
-        val db = DepositDatabase.getInstance(context)
-        val dao = db.depositDao()
-        viewModelScope.launch(Dispatchers.IO) {
-            dao.clearAll()
-            _recentActivities.clear()
-        }
+    fun clearActivities() {
+        _recentActivities.clear()
     }
 }
+
+// ------------------ Composable Screen ------------------
 
 @Composable
 fun InvestScreen(
@@ -164,6 +168,7 @@ fun InvestScreen(
     var depositAmount by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
     val context = LocalContext.current
+    val db = remember { InvestmentDatabase.getDatabase(context) }
 
     val isPhoneNumberValid = phoneNumber.startsWith("2547") && phoneNumber.length == 12
     val balance = viewModel.balance.value
@@ -175,8 +180,15 @@ fun InvestScreen(
             .background(Color(0xFFF5F5F5))
     ) {
         Text("Invest Now", style = MaterialTheme.typography.headlineMedium, color = Color(0xFF333333))
+
         Spacer(modifier = Modifier.height(16.dp))
-        Text("Balance: KES ${"%.2f".format(balance)}", style = MaterialTheme.typography.bodyLarge, color = Color(0xFF4CAF50))
+
+        Text(
+            "Balance: KES ${"%.2f".format(balance)}",
+            style = MaterialTheme.typography.bodyLarge,
+            color = Color(0xFF4CAF50)
+        )
+
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
@@ -220,7 +232,8 @@ fun InvestScreen(
                     Toast.makeText(context, "Enter a valid phone number (2547XXXXXXXX)", Toast.LENGTH_SHORT).show()
                     return@Button
                 }
-                viewModel.depositWithFlutterwave(amount, phoneNumber, context)
+
+                viewModel.depositWithFlutterwave(amount, phoneNumber, context, db)
                 depositAmount = ""
                 phoneNumber = ""
             },
@@ -234,9 +247,12 @@ fun InvestScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         Text("Recent Activities", style = MaterialTheme.typography.titleMedium, color = Color(0xFF333333))
+
         Spacer(modifier = Modifier.height(8.dp))
 
-        LazyColumn(modifier = Modifier.fillMaxHeight(0.4f)) {
+        LazyColumn(
+            modifier = Modifier.fillMaxHeight(0.4f)
+        ) {
             items(viewModel.recentActivities) { activity ->
                 Text(
                     activity,
@@ -250,7 +266,7 @@ fun InvestScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { viewModel.clearActivities(context) },
+            onClick = { viewModel.clearActivities() },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF5722))
         ) {
